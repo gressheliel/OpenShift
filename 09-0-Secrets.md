@@ -27,4 +27,31 @@ spec:
             name: secret-cm
 ```
 
+## Ejemplo para Odoo
+- echo secret | base64
+- oc apply -f secreto1.yaml
+- oc get secret
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secreto1
+type: Opaque
+data:
+  PASSWORD: c2VjcmV0Cg==
+```
 
+- En el servicio de odoo
+- oc apply -f odoo.yaml
+
+```
+        - name: PASSWORD
+          valueFrom:
+           secretKeyRef:
+             name: secreto1
+             key: PASSWORD
+```
+
+## ConfigMap Secrets desde la consola web
+- Administrador -> Workloads -> Secrets
+- Administrador -> Workloads -> Config Maps
